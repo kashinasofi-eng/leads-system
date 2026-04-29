@@ -73,15 +73,11 @@ const enrichment = [
 ];
 
 // ── Fixed pitch + closing (both variants, alternated for slight variety) ──
-const PITCH = 'Wir entwickeln ein System für Handwerksbetriebe, das Anfragen automatisch nachfasst, Interessenten kontaktiert, vorqualifiziert und Termine direkt bucht – ohne zusätzlichen Aufwand.';
-const CLOSINGS = [
-  'Wäre das grundsätzlich interessant für euch?',
-  'Wäre ein kurzes Gespräch dazu interessant?',
-];
+const PITCH   = 'Wir entwickeln ein System für Handwerksbetriebe, das Anfragen automatisch nachfasst, Interessenten kontaktiert, vorqualifiziert und Termine direkt bucht – ohne zusätzlichen Aufwand und das zu einem monatlich kündbaren Abo.';
+const CLOSING = 'Wäre das ein Gespräch wert?';
 
-function buildMessage(companyName, obs, idx) {
-  const closing = CLOSINGS[idx % 2];
-  return `Guten Tag ${companyName},\n\nwir sind auf euren Betrieb gestoßen und haben gesehen, ${obs}.\n${PITCH}\n${closing}`;
+function buildMessage(companyName, obs) {
+  return `Guten Tag ${companyName},\n\nwir sind auf euren Betrieb gestoßen und haben gesehen, ${obs}.\n${PITCH}\n${CLOSING}`;
 }
 
 // ── Load source data ──────────────────────────────────────────────────────
@@ -108,7 +104,7 @@ const output = tier1.map((row, idx) => {
     'City':                   row['City'],
     'Category':               row['Category'],
     'Score':                  scoreMap[row['Company Name']] || '',
-    'Improved Outreach Message': buildMessage(row['Company Name'], obs, idx),
+    'Improved Outreach Message': buildMessage(row['Company Name'], obs),
   };
 });
 
